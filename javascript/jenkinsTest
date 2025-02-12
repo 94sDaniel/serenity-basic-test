@@ -1,0 +1,20 @@
+pipeline {
+    agent {label 'master'}
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'lab', credentialsId: 'credentials', url: 'https://github.com/my-organization/my-project.git'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn clean compile test'
+            }
+        }
+        stage('Pruebas de Aceptación') {
+            steps {
+                sh 'mvn test -Dtest=AcceptanceTest' 
+            }
+        }
+    }
+}
